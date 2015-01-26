@@ -37,7 +37,7 @@ features = []
 
 count = 0
 
-# Creat feature for each ip
+# Create feature for each ip
 for entry in host_data:
 	new_feature = Feature(geometry=Point((entry.location.longitude, entry.location.latitude)),
 						  id=count)
