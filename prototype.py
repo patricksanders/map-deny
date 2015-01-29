@@ -10,7 +10,7 @@ def is_valid_line(line):
 	return line and not line.startswith('#')
 
 # Create generator expression for valid lines
-with open('hosts.deny') as hosts_file:
+with open('data/hosts.deny') as hosts_file:
 	lines = filter(is_valid_line, (line.rstrip() for line in hosts_file))
 	count = len(lines)
 
@@ -37,7 +37,7 @@ features = []
 
 count = 0
 
-# Create feature for each ip
+# Creat feature for each ip
 for entry in host_data:
 	new_feature = Feature(geometry=Point((entry.location.longitude, entry.location.latitude)),
 						  id=count)
