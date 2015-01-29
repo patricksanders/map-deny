@@ -16,18 +16,43 @@
     <h2>map-deny</h2>
     <div id="map" class="map"></div>
     <script type="text/javascript">
+    var deniedHostsSource = new ol.source.GeoJSON({
+      projection:'EPSG:4326',
+      url: './data/sample.json'
+    });
+    var clusterSource = new ol.source.Cluster({
+      distance:40,
+      source: deniedHostsSource
+    });
+    var styleCache = {};
 	  var deniedHostsLayer = new ol.layer.Vector({
         title: 'Denied Hosts',
-        source: new ol.source.GeoJSON({
-          projection:'EPSG:4326',
-          url: './data/sample.json'
-        }),
-        style: new ol.style.Style({
-          image: new ol.style.Circle({
-            radius: 3,
-            fill: new ol.style.Fill({color: 'red'})
-          })
-        })
+        source: clusterSource,
+        style: function(feature, resolution) {
+          var size = feature.get('features').length;
+          var style = styleCache[size];
+          if (!style) {
+            style = [new ol.style.Style({
+              image: new ol.style.Circle({
+                radius: 10,
+                stroke: new ol.style.Stroke({
+                  color: '#fff'
+                }),
+                fill: new ol.style.Fill({
+                  color: '#3399CC'
+                })
+              }),
+              text: new ol.style.Text({
+                text: size.toString(),
+                fill: new ol.style.Fill({
+                  color: '#fff'
+                })
+              })
+            })];
+            styleCache[size] = style;
+          }
+          return style;
+        }
       });
 
       var map = new ol.Map({
