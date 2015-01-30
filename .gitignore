@@ -1,6 +1,5 @@
 *.swp
 *.swo
 .DS_Store
-db/
 venv/
 ol/
