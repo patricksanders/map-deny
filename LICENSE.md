@@ -2,6 +2,7 @@ The GeoLite2 databases are used and distributed under the [Creative Commons Attr
 
 map-deny is licensed under the GNU General Public License v3.0
 
+```
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
@@ -676,4 +677,5 @@ may consider it more useful to permit linking proprietary applications with
 the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.
+```
 
