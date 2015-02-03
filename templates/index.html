@@ -2,14 +2,14 @@
 <html lang="en">
   <head>
      <meta charset="UTF-8"> 
-    <link rel="stylesheet" href="./ol/ol.css" type="text/css">
+    <link rel="stylesheet" href="/static/ol/ol.css" type="text/css">
     <style>
       .map {
         height: 100%;
         width: 100%;
       }
     </style>
-    <script src="./ol/ol.js" type="text/javascript"></script>
+    <script src="/static/ol/ol.js" type="text/javascript"></script>
     <title>map-deny</title>
   </head>
   <body>
@@ -18,7 +18,7 @@
     <script type="text/javascript">
     var deniedHostsSource = new ol.source.GeoJSON({
       projection:'EPSG:4326',
-      url: './data/sample.json'
+      url: 'static/data/sample.json'
     });
     var clusterSource = new ol.source.Cluster({
       distance:40,
