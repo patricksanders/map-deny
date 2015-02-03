@@ -1,5 +1,3 @@
-*.swp
-*.swo
 .DS_Store
 venv/
 ol/
@@ -7,3 +5,8 @@ bin/
 lib/
 local/
 include/
+upload/
+*.swp
+*.swo
+*.pyc
+config.py
