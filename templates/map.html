@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}map-deny{% endblock title %}
+
+{% block head %}
+{{ super() }}
+    <!-- OpenLayers CSS -->
+    <link href="static/css/ol.css" rel="stylesheet">
+{% endblock head %}
+
+{% block content %}
+    <div id="map" class="map"></div>
+{% endblock content %}
+
+{% block js %}
+{{ super() }}
+    <!-- OpenLayers -->
+    <script src="static/js/ol.js"></script>
+
+    <!-- Custom JS -->
+    <script type="text/javascript">
+    var deniedHostsSource = new ol.source.GeoJSON({
+      projection:'EPSG:3857',
+      url: 'static/data/sample.json'
+    });
+    var clusterSource = new ol.source.Cluster({
+      distance:40,
+      source: deniedHostsSource
+    });
+    var styleCache = {};
+    var deniedHostsLayer = new ol.layer.Vector({
+        title: 'Denied Hosts',
+        source: clusterSource,
+        style: function(feature, resolution) {
+          var size = feature.get('features').length;
+          var style = styleCache[size];
+          if (!style) {
+            style = [new ol.style.Style({
+              image: new ol.style.Circle({
+                radius: 10,
+                stroke: new ol.style.Stroke({
+                  color: '#fff'
+                }),
+                fill: new ol.style.Fill({
+                  color: '#3399CC'
+                })
+              }),
+              text: new ol.style.Text({
+                text: size.toString(),
+                fill: new ol.style.Fill({
+                  color: '#fff'
+                })
+              })
+            })];
+            styleCache[size] = style;
+          }
+          return style;
+        }
+      });
+    $(document).ready(function() {
+      var map = new ol.Map({
+          target: 'map',
+          layers: [
+              new ol.layer.Tile({
+                  source: new ol.source.MapQuest({layer: 'sat'}),
+              }),
+              /*
+              new ol.layer.Tile({
+                source: new ol.source.TileWMS({
+                url: 'http://demo.boundlessgeo.com/geoserver/wms',
+                params: {'LAYERS': 'ne:NE1_HR_LC_SR_W_DR'}
+                })
+              }),
+              */
+              deniedHostsLayer
+          ],
+          view: new ol.View({
+              //projection: 'EPSG:3857',
+              center: ol.proj.transform([0, 0], 'EPSG:4326', 'EPSG:3857'),
+              extent: ol.proj.transformExtent([-180,-50,180,50], 'EPSG:4326', 'EPSG:3857'),
+              maxZoom: 12,
+              minZoom: 2,
+              zoom: 2
+          })
+      });
+      resizeMap();
+      map.updateSize();
+    });
+    function resizeMap() {
+        var canvasheight=$('#map').parent().css('height');
+        var canvaswidth=$('#map').parent().css('width');
+        $('#map').css("height", canvasheight);
+        $('#map').css("width", canvaswidth);
+    };
+    window.onresize = function() {
+        resizeMap();
+    };
+    </script>
+{% endblock js %}

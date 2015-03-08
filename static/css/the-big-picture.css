@@ -1,0 +1,18 @@
+/*!
+ * Start Bootstrap - The Big Picture HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+html, body {
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+  background: #AAAAAA;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.map {
+    height= 100%;
+}
+
